@@ -8,7 +8,6 @@
         body {
             font-family: 'Courier New', Courier, monospace;
             background-color: #0d0e15;
-            /* We halen de flex-stijlen hier weg om je centering niet te breken */
             color: #e2e8f0;
             margin: 0;
             padding: 20px;
@@ -17,34 +16,29 @@
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
-            
-            /* De achtergrond zetten we hier strak in met een donkere overlay */
             background-image: linear-gradient(rgba(13, 14, 21, 0.9), rgba(13, 14, 21, 0.9)), url('https://www.transparenttextures.com/patterns/black-thread.png');
         }
 
         .container {
             max-width: 400px;
-            width: 90%;
+            width: 100%;
             padding: 30px;
             border: 2px solid #1e293b;
             border-radius: 12px;
             background-color: #11131e;
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
-            text-align: center;
-        }
-
-        h1, p, footer {
-            text-align: center !important;
-            display: block;
-            width: 100%;
+            text-align: center; /* Centerert alle tekst binnen de container */
+            box-sizing: border-box;
         }
 
         h1 {
             font-size: 2.5rem;
+            margin-top: 0;
             margin-bottom: 10px;
             color: #38bdf8;
             text-transform: uppercase;
             letter-spacing: 2px;
+            text-align: center;
         }
 
         .status {
@@ -52,13 +46,10 @@
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 30px;
+            margin: 0 auto 30px auto;
             display: inline-block;
-            
-            /* Zorgt voor die vette groen-gloeiende cyberpunk vibe */
+            text-align: center;
             text-shadow: 0 0 10px rgba(0, 255, 102, 0.6);
-            
-            /* Dit zorgt ervoor dat hij echt gaat knipperen */
             animation: blink 1.5s infinite; 
         }
 
@@ -67,19 +58,21 @@
             line-height: 1.6;
             margin-bottom: 30px;
             color: #94a3b8;
+            text-align: center;
         }
 
         .links {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            width: 100%;
         }
 
         .btn {
             display: block;
             padding: 14px;
             color: #0d0e15;
-            background-color: #38bdf8; /* De mooie blauwe X-knop kleur */
+            background-color: #38bdf8;
             text-decoration: none;
             font-weight: bold;
             border-radius: 6px;
@@ -87,16 +80,14 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            
-            /* DIT GAAT HET FIXEN: */
-            text-align: center;       /* Zorgt dat de letters precies in het midden staan */
-            font-size: 0.9rem;        /* Maakt de letters een fractie kleiner zodat Instagram op 1 regel past */
+            text-align: center;
+            font-size: 0.9rem;
         }
 
         .btn:hover {
             background-color: #7dd3fc;
             transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6); /* Die vette gloed */
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
         }
 
         footer {
@@ -105,11 +96,12 @@
             color: #64748b;
             letter-spacing: 1px;
             text-transform: uppercase;
+            text-align: center;
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(0, 255, 102, 0.6)); }
+            50% { opacity: 0.4; filter: drop-shadow(0 0 2px rgba(0, 255, 102, 0.2)); }
         }
     </style>
 </head>
