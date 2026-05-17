@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
     body {
       font-family: 'VT323', monospace;
       overflow-x: hidden;
@@ -15,24 +14,20 @@
       margin: 0;
       padding: 0;
     }
-
     .neon-text {
-      text-shadow: 
+      text-shadow:
         0 0 10px #00ff9f,
         0 0 20px #00ff9f,
         0 0 40px #00ffff,
         0 0 80px #ff00ff;
     }
-
     .glitch {
       animation: glitch 1.5s infinite linear;
     }
-
     @keyframes glitch {
       2%, 64% { transform: translate(2px,0) skew(0deg); }
       4%, 60% { transform: translate(-2px,0) skew(0deg); }
     }
-
     .button {
       transition: all 0.3s ease;
     }
@@ -40,7 +35,6 @@
       transform: translateY(-4px) scale(1.03);
       box-shadow: 0 0 30px #00ffff;
     }
-
     canvas#matrix {
       position: fixed;
       top: 0; left: 0;
@@ -50,7 +44,6 @@
       height: 100%;
       image-rendering: pixelated;
     }
-
     .content {
       min-height: 100vh;
       display: flex;
@@ -63,15 +56,13 @@
   </style>
 </head>
 <body class="min-h-screen text-cyan-300 bg-black">
-
   <!-- Matrix Rain -->
   <canvas id="matrix"></canvas>
-
   <div class="content">
     <div class="max-w-2xl w-full mx-auto relative z-10">
       <!-- Header -->
       <div class="text-center mb-10">
-        <h1 class="text-6xl md:text-7xl font-bold tracking-widest neon-text glitch text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 mb-2">
+        <h1 class="text-7xl sm:text-8xl md:text-8xl font-bold tracking-widest neon-text glitch text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 mb-2">
           FAIRYLABS
         </h1>
         <div class="flex items-center justify-center gap-3 text-2xl text-lime-400">
@@ -88,22 +79,22 @@
 
       <!-- Social Buttons -->
       <div class="space-y-4">
-        <a href="https://x.com/fairylabs_tech" target="_blank" 
+        <a href="https://x.com/fairylabs_tech" target="_blank"
            class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
           FOLLOW THE LAB ON X
         </a>
-        
-        <a href="https://instagram.com/fairylabs.tech" target="_blank" 
+       
+        <a href="https://instagram.com/fairylabs.tech" target="_blank"
            class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
           CHECK US OUT ON INSTAGRAM
         </a>
-        
-        <a href="https://tiktok.com/@fairylabs.tech" target="_blank" 
+       
+        <a href="https://tiktok.com/@fairylabs.tech" target="_blank"
            class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
           FOLLOW THE LAB ON TIKTOK
         </a>
-        
-        <a href="https://t.me/fairylabs_tech" target="_blank" 
+       
+        <a href="https://t.me/fairylabs_tech" target="_blank"
            class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
           GET UPDATES ON TELEGRAM
         </a>
@@ -119,50 +110,36 @@
   <script>
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d', { alpha: true });
-
     let fontSize = 14;
     let columns, drops;
-
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      
+     
       columns = Math.floor(canvas.width / fontSize);
       drops = [];
-      
-      // Drops starten verspreid over de hoogte → geen flash + direct regen
       for (let i = 0; i < columns; i++) {
         drops[i] = Math.random() * (canvas.height / fontSize) * 0.8;
       }
     }
-
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
     function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.085)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
       ctx.fillStyle = '#00ff9f';
       ctx.font = `${fontSize}px monospace`;
-
       for (let i = 0; i < drops.length; i++) {
         const text = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     }
-
-    // Initialisatie
     resizeCanvas();
-    
-    // Start de animatie meteen
     setInterval(draw, 35);
 
-    // Resize handling
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', () => {
       setTimeout(resizeCanvas, 100);
