@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    
     body {
       font-family: 'VT323', monospace;
       overflow-x: hidden;
@@ -14,27 +15,35 @@
       margin: 0;
       padding: 0;
     }
+
     .neon-text {
       text-shadow:
-        0 0 10px #00ff9f,
-        0 0 20px #00ff9f,
-        0 0 40px #00ffff,
-        0 0 80px #ff00ff;
+        0 0 12px #ff00ff,
+        0 0 25px #ff00ff,
+        0 0 45px #00ffff,
+        0 0 70px #a020f0,
+        0 0 100px #a020f0;
+      -webkit-text-stroke: 2px #000;
+      paint-order: stroke fill;
     }
+
     .glitch {
       animation: glitch 1.5s infinite linear;
     }
+
     @keyframes glitch {
       2%, 64% { transform: translate(2px,0) skew(0deg); }
       4%, 60% { transform: translate(-2px,0) skew(0deg); }
     }
+
     .button {
       transition: all 0.3s ease;
     }
     .button:hover {
       transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 0 30px #00ffff;
+      box-shadow: 0 0 30px #ff00ff;
     }
+
     canvas#matrix {
       position: fixed;
       top: 0; left: 0;
@@ -44,6 +53,7 @@
       height: 100%;
       image-rendering: pixelated;
     }
+
     .content {
       min-height: 100vh;
       display: flex;
@@ -56,13 +66,15 @@
   </style>
 </head>
 <body class="min-h-screen text-cyan-300 bg-black">
+
   <!-- Matrix Rain -->
   <canvas id="matrix"></canvas>
+
   <div class="content">
     <div class="max-w-2xl w-full mx-auto relative z-10">
       <!-- Header -->
       <div class="text-center mb-10">
-        <h1 class="text-7xl sm:text-8xl md:text-8xl font-bold tracking-widest neon-text glitch text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 mb-2">
+        <h1 class="text-7xl sm:text-8xl md:text-8xl font-bold tracking-widest neon-text glitch text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400 mb-2">
           FAIRYLABS
         </h1>
         <div class="flex items-center justify-center gap-3 text-2xl text-lime-400">
@@ -72,7 +84,7 @@
       </div>
 
       <!-- Welcome Text -->
-      <div class="bg-black/80 border border-cyan-500/40 p-8 mb-12 backdrop-blur-sm rounded-lg text-lg leading-relaxed text-center">
+      <div class="bg-black/80 border border-purple-500/40 p-8 mb-12 backdrop-blur-sm rounded-lg text-lg leading-relaxed text-center">
         Welcome to the lab. We are building the future of hardware hacking, custom displays, and community-driven tech. 
         Our systems are currently booting up, and new inventory is being prepared.
       </div>
@@ -80,22 +92,22 @@
       <!-- Social Buttons -->
       <div class="space-y-4">
         <a href="https://x.com/fairylabs_tech" target="_blank"
-           class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+           class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           FOLLOW THE LAB ON X
         </a>
        
         <a href="https://instagram.com/fairylabs.tech" target="_blank"
-           class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+           class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           CHECK US OUT ON INSTAGRAM
         </a>
        
         <a href="https://tiktok.com/@fairylabs.tech" target="_blank"
-           class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+           class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           FOLLOW THE LAB ON TIKTOK
         </a>
        
         <a href="https://t.me/fairylabs_tech" target="_blank"
-           class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+           class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           GET UPDATES ON TELEGRAM
         </a>
       </div>
@@ -112,17 +124,19 @@
     const ctx = canvas.getContext('2d', { alpha: true });
     let fontSize = 14;
     let columns, drops;
+
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-     
       columns = Math.floor(canvas.width / fontSize);
       drops = [];
       for (let i = 0; i < columns; i++) {
         drops[i] = Math.random() * (canvas.height / fontSize) * 0.8;
       }
     }
+
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
     function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.085)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -137,13 +151,12 @@
         drops[i]++;
       }
     }
+
     resizeCanvas();
     setInterval(draw, 35);
 
     window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('orientationchange', () => {
-      setTimeout(resizeCanvas, 100);
-    });
+    window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
   </script>
 </body>
 </html>
