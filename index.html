@@ -128,13 +128,18 @@
       canvas.height = window.innerHeight;
       
       columns = Math.floor(canvas.width / fontSize);
-      drops = Array(columns).fill(Math.random() * canvas.height / fontSize); // Start drops op verschillende hoogtes
+      drops = [];
+      
+      // Drops starten verspreid over de hoogte → geen flash + direct regen
+      for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * (canvas.height / fontSize) * 0.8;
+      }
     }
 
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.085)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = '#00ff9f';
@@ -154,25 +159,13 @@
     // Initialisatie
     resizeCanvas();
     
-    // Direct meerdere frames tekenen zodat het meteen gevuld is
-    for (let i = 0; i < 25; i++) {
-      draw();
-    }
-
-    // Start de animatie
+    // Start de animatie meteen
     setInterval(draw, 35);
 
     // Resize handling
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      // Herstart meteen na resize
-      for (let i = 0; i < 15; i++) draw();
-    });
+    window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', () => {
-      setTimeout(() => {
-        resizeCanvas();
-        for (let i = 0; i < 20; i++) draw();
-      }, 150);
+      setTimeout(resizeCanvas, 100);
     });
   </script>
 </body>
