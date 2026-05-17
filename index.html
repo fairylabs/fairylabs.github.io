@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FAIRLYLABS — SYSTEM BOOTING</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
     body {
       font-family: 'VT323', monospace;
       overflow-x: hidden;
-      overflow-y: auto; /* Belangrijk voor scrollen op iPhone */
+      overflow-y: auto;
+      margin: 0;
+      padding: 0;
     }
 
     .neon-text {
@@ -47,6 +48,7 @@
       opacity: 0.75;
       width: 100%;
       height: 100%;
+      image-rendering: pixelated;
     }
 
     .content {
@@ -55,6 +57,8 @@
       align-items: center;
       justify-content: center;
       padding: 2rem 1rem;
+      position: relative;
+      z-index: 10;
     }
   </style>
 </head>
@@ -114,29 +118,23 @@
 
   <script>
     const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
 
     let fontSize = 14;
     let columns, drops;
 
     function resizeCanvas() {
-      canvas.height = window.innerHeight;
       canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
       
-      columns = canvas.width / fontSize;
-      drops = Array(Math.floor(columns)).fill(1);
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(Math.random() * canvas.height / fontSize); // Start drops op verschillende hoogtes
     }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('orientationchange', () => {
-      setTimeout(resizeCanvas, 100);
-    });
 
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)'; // iets meer fade op mobiel
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = '#00ff9f';
@@ -153,7 +151,29 @@
       }
     }
 
+    // Initialisatie
+    resizeCanvas();
+    
+    // Direct meerdere frames tekenen zodat het meteen gevuld is
+    for (let i = 0; i < 25; i++) {
+      draw();
+    }
+
+    // Start de animatie
     setInterval(draw, 35);
+
+    // Resize handling
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      // Herstart meteen na resize
+      for (let i = 0; i < 15; i++) draw();
+    });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        resizeCanvas();
+        for (let i = 0; i < 20; i++) draw();
+      }, 150);
+    });
   </script>
 </body>
 </html>
