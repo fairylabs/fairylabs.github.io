@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-    
+   
     body {
       font-family: 'VT323', monospace;
       overflow-x: hidden;
@@ -63,12 +63,39 @@
       position: relative;
       z-index: 10;
     }
+
+    /* === SCANLINE EFFECT === */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 15;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 255, 159, 0.12) 3px,
+        rgba(0, 255, 159, 0.12) 6px
+      );
+      animation: scan 8s linear infinite;
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes scan {
+      0%   { background-position: 0 0; }
+      100% { background-position: 0 1200px; }
+    }
   </style>
 </head>
 <body class="min-h-screen text-cyan-300 bg-black">
 
   <!-- Matrix Rain -->
   <canvas id="matrix"></canvas>
+
+  <!-- Scanline Effect -->
+  <div class="scanlines"></div>
 
   <div class="content">
     <div class="max-w-2xl w-full mx-auto relative z-10">
@@ -78,14 +105,14 @@
           FAIRYLABS
         </h1>
         <div class="flex items-center justify-center gap-3 text-2xl" style="color: #00ff9f;">
-        <span class="text-3xl drop-shadow-[0_0_10px_#00ff9f]">▲</span>
-        <span class="tracking-[4px] animate-pulse drop-shadow-[0_0_12px_#00ff9f]">SYSTEM: BOOTING_</span>
+          <span class="text-3xl drop-shadow-[0_0_10px_#00ff9f]">▲</span>
+          <span class="tracking-[4px] animate-pulse drop-shadow-[0_0_12px_#00ff9f]">SYSTEM: BOOTING_</span>
         </div>
       </div>
 
       <!-- Welcome Text -->
       <div class="bg-black/80 border border-purple-500/40 p-8 mb-12 backdrop-blur-sm rounded-lg text-lg leading-relaxed text-center">
-        Welcome to the lab. We are building the future of hardware hacking, custom displays, and community-driven tech. 
+        Welcome to the lab. We are building the future of hardware hacking, custom displays, and community-driven tech.
         Our systems are currently booting up, and new inventory is being prepared.
       </div>
 
@@ -95,17 +122,17 @@
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           FOLLOW THE LAB ON X
         </a>
-       
+      
         <a href="https://instagram.com/fairylabs.tech" target="_blank"
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           CHECK US OUT ON INSTAGRAM
         </a>
-       
+      
         <a href="https://tiktok.com/@fairylabs.tech" target="_blank"
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           FOLLOW THE LAB ON TIKTOK
         </a>
-       
+      
         <a href="https://t.me/fairylabs_tech" target="_blank"
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
           GET UPDATES ON TELEGRAM
@@ -154,7 +181,6 @@
 
     resizeCanvas();
     setInterval(draw, 35);
-
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
   </script>
