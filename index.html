@@ -1,127 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyLabs</title>
-    <style>
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #0d0e15;
-            color: #e2e8f0;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-            background-image: linear-gradient(rgba(13, 14, 21, 0.9), rgba(13, 14, 21, 0.9)), url('https://www.transparenttextures.com/patterns/black-thread.png');
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAIRLYLABS — SYSTEM BOOTING</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-        .container {
-            max-width: 400px;
-            width: 100%;
-            padding: 30px;
-            border: 2px solid #1e293b;
-            border-radius: 12px;
-            background-color: #11131e;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
-            text-align: center;
-            box-sizing: border-box;
-        }
+    body {
+      font-family: 'VT323', monospace;
+      overflow: hidden;
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-top: 0;
-            margin-bottom: 10px;
-            color: #38bdf8;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-align: center;
-        }
+    .neon-text {
+      text-shadow: 
+        0 0 10px #00ff9f,
+        0 0 20px #00ff9f,
+        0 0 40px #00ffff,
+        0 0 80px #ff00ff;
+    }
 
-        .status {
-            color: #00ff66 !important;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin: 0 auto 30px auto;
-            display: inline-block;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.6);
-            animation: blink 1.5s infinite; 
-        }
+    .glitch {
+      animation: glitch 1.5s infinite linear;
+    }
 
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: #94a3b8;
-            text-align: center;
-        }
+    @keyframes glitch {
+      2%, 64% { transform: translate(2px,0) skew(0deg); }
+      4%, 60% { transform: translate(-2px,0) skew(0deg); }
+    }
 
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-        }
+    .button {
+      transition: all 0.3s ease;
+    }
+    .button:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 0 30px #00ffff;
+    }
 
-        .btn {
-            display: block;
-            padding: 14px;
-            color: #0d0e15;
-            background-color: #38bdf8;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .btn:hover {
-            background-color: #7dd3fc;
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
-        }
-
-        footer {
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: #64748b;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(0, 255, 102, 0.6)); }
-            50% { opacity: 0.4; filter: drop-shadow(0 0 2px rgba(0, 255, 102, 0.2)); }
-        }
-    </style>
+    canvas#matrix {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: -1;
+      opacity: 0.75;
+    }
+  </style>
 </head>
-<body>
+<body class="min-h-screen text-cyan-300 flex items-center justify-center relative bg-black">
 
-    <div class="container">
-        <h1>FairyLabs</h1>
-        <div class="status">▲ SYSTEM: BOOTING_</div>
-        
-        <p>Welcome to the lab. We are building the future of hardware hacking, custom displays, and community-driven tech. Our systems are currently booting up, and new inventory is being prepared.</p>
-        
-        <div class="links">
-            <a href="https://x.com/fairylabs_tech" target="_blank" class="btn">Follow the lab on X</a>
-            <a href="https://instagram.com/fairylabs.tech" target="_blank" class="btn">Check us out on Instagram</a>
-            <a href="https://tiktok.com/@fairylabs.tech" target="_blank" class="btn">Follow the lab on TikTok</a>
-            <a href="https://t.me/fairylabs_tech" target="_blank" class="btn">Get updates on Telegram</a>
-        </div>
+  <!-- Matrix Rain -->
+  <canvas id="matrix"></canvas>
 
-        <footer>&copy; 2026 FairyLabs. All rights reserved.</footer>
+  <div class="max-w-2xl w-full mx-auto p-8 relative z-10">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-7xl font-bold tracking-widest neon-text glitch text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 mb-2">
+        FAIRLYLABS
+      </h1>
+      <div class="flex items-center justify-center gap-3 text-2xl text-lime-400">
+        <span class="text-3xl">▲</span>
+        <span class="tracking-[4px] animate-pulse">SYSTEM: BOOTING_</span>
+      </div>
     </div>
-    
+
+    <!-- Welcome Text -->
+    <div class="bg-black/80 border border-cyan-500/40 p-8 mb-12 backdrop-blur-sm rounded-lg text-lg leading-relaxed text-center">
+      Welcome to the lab. We are building the future of hardware hacking, custom displays, and community-driven tech. 
+      Our systems are currently booting up, and new inventory is being prepared.
+    </div>
+
+    <!-- Social Buttons - Alle dezelfde cyan kleur -->
+    <div class="space-y-4">
+      <a href="https://x.com/fairylabs_tech" target="_blank" 
+         class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+        FOLLOW THE LAB ON X
+      </a>
+      
+      <a href="https://instagram.com/fairylabs.tech" target="_blank" 
+         class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+        CHECK US OUT ON INSTAGRAM
+      </a>
+      
+      <a href="https://tiktok.com/@fairylabs.tech" target="_blank" 
+         class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+        FOLLOW THE LAB ON TIKTOK
+      </a>
+      
+      <a href="https://t.me/fairylabs_tech" target="_blank" 
+         class="button block bg-black border-2 border-cyan-400 hover:border-cyan-300 text-cyan-300 py-5 px-8 text-xl text-center tracking-widest">
+        GET UPDATES ON TELEGRAM
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-16 text-xs opacity-70">
+      © 2026 FAIRLYLABS. ALL RIGHTS RESERVED.
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const fontSize = 14;
+    let columns = canvas.width / fontSize;
+    let drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00ff9f';
+      ctx.font = `${fontSize}px monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+  </script>
 </body>
 </html>
