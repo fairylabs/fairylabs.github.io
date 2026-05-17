@@ -8,16 +8,18 @@
         body {
             font-family: 'Courier New', Courier, monospace;
             background-color: #0d0e15;
-            /* Hieronder activeren we de tech-achtergrond via een betrouwbare link */
-            background-image: linear-gradient(rgba(13, 14, 21, 0.85), rgba(13, 14, 21, 0.85)), url('https://www.transparenttextures.com/patterns/black-thread.png');
+            /* We halen de flex-stijlen hier weg om je centering niet te breken */
             color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
             box-sizing: border-box;
+            
+            /* De achtergrond zetten we hier strak in met een donkere overlay */
+            background-image: linear-gradient(rgba(13, 14, 21, 0.9), rgba(13, 14, 21, 0.9)), url('https://www.transparenttextures.com/patterns/black-thread.png');
         }
 
         .container {
