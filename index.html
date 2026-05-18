@@ -34,12 +34,29 @@
     }
 
     .glitch {
-      animation: glitch 1.5s infinite linear;
+      animation: cyberFloat 6s infinite ease-in-out;
     }
 
-    @keyframes glitch {
-      2%, 64% { transform: translate(2px,0) skew(0deg); }
-      4%, 60% { transform: translate(-2px,0) skew(0deg); }
+    @keyframes cyberFloat {
+    /* 0% - Startpositie */
+      0%, 100% { 
+      transform: translate(0, 0) skew(0deg); 
+    }
+  
+    /* 25% - Rechtsboven + mini glitch effect */
+      23% { transform: translate(6px, -5px) skew(0deg); }
+      25% { transform: translate(8px, -4px) skew(3deg); } /* < Glitch! */
+      27% { transform: translate(6px, -5px) skew(0deg); }
+  
+    /* 50% - Hoogste punt in het midden */
+      50% { 
+        transform: translate(0, -12px) skew(0deg); 
+    }
+  
+    /* 75% - Linksboven + mini glitch effect */
+      73% { transform: translate(-6px, -5px) skew(0deg); }
+      75% { transform: translate(-8px, -4px) skew(-3deg); } /* < Glitch! */
+      77% { transform: translate(-6px, -5px) skew(0deg); }
     }
 
     .button {
