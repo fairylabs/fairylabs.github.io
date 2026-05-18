@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cyberdecks - FairyLabs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    body { font-family: 'VT323', monospace; overflow-x: hidden; overflow-y: auto; margin: 0; padding: 0; }
+    .neon-text { text-shadow: 0 0 12px #ff00ff, 0 0 25px #ff00ff, 0 0 45px #00ffff; -webkit-text-stroke: 2px #000; paint-order: stroke fill; }
+    .button { transition: all 0.3s ease; }
+    .button:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 0 30px #ff00ff; }
+    canvas#matrix { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.75; width: 100%; height: 100%; image-rendering: pixelated; }
+    .content { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; position: relative; z-index: 10; }
+    .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 15; pointer-events: none; background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0, 255, 159, 0.12) 3px, rgba(0, 255, 159, 0.12) 6px); animation: scan 8s linear infinite; mix-blend-mode: overlay; }
+    @keyframes scan { 0% { background-position: 0 0; } 100% { background-position: 0 1200px; } }
+  </style>
+</head>
+<body class="min-h-screen text-cyan-300 bg-black">
+  <canvas id="matrix"></canvas>
+  <div class="scanlines"></div>
+
+  <div class="content">
+    <div class="max-w-2xl w-full mx-auto relative z-10">
+      <div class="text-center mb-8">
+        <h1 class="text-5xl sm:text-6xl font-bold tracking-widest neon-text mb-2">CYBERDECKS</h1>
+        <div class="text-xl text-green-400 tracking-wider">DIRECTORY: /LAB/HARDWARE/DECKS</div>
+      </div>
+
+      <div class="bg-black/80 border border-purple-500/40 p-8 mb-8 backdrop-blur-sm rounded-lg text-lg text-center">
+        <p class="mb-4 text-left border-b border-purple-500/20 pb-2 text-purple-300">&gt; LOADING INVENTORY...</p>
+        <p class="text-left text-gray-400">Custom, rugged portable terminals designed for network diagnostics, field operations, and hardware hacking. Mechanical switches, integrated displays, and built-in battery management systems.</p>
+        <div class="mt-6 p-4 border border-cyan-500/30 bg-cyan-950/20 text-cyan-400 rounded animate-pulse">
+          STATUS: IN PRODUCTION_ [BATCH_01 COMMENCING SOON]
+        </div>
+      </div>
+
+      <a href="index.html" class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-3 px-8 text-xl text-center tracking-widest">
+        RETURN TO MAIN SYSTEM
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('matrix'); const ctx = canvas.getContext('2d', { alpha: true }); let fontSize = 14; let columns, drops;
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; columns = Math.floor(canvas.width / fontSize); drops = []; for (let i = 0; i < columns; i++) drops[i] = Math.random() * (canvas.height / fontSize) * 0.8; }
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    function draw() { ctx.fillStyle = 'rgba(0, 0, 0, 0.085)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#00ff9f'; ctx.font = `${fontSize}px monospace`; for (let i = 0; i < drops.length; i++) { const text = chars[Math.floor(Math.random() * chars.length)]; ctx.fillText(text, i * fontSize, drops[i] * fontSize); if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; } }
+    resizeCanvas(); setInterval(draw, 35); window.addEventListener('resize', resizeCanvas);
+  </script>
+</body>
+</html>
