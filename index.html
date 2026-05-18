@@ -17,15 +17,27 @@
       padding: 0;
     }
 
+   /* === NEON TEXT EFFECT === */
+    /* Dit geldt voor desktop: de grote, diepe gloed */
     .neon-text {
-      text-shadow:
-        0 0 12px #ff00ff,
-        0 0 25px #ff00ff,
-        0 0 45px #00ffff,
-        0 0 70px #a020f0,
-        0 0 100px #a020f0;
+      text-shadow: 
+        0 0 12px #ff00ff, 
+        0 0 25px #ff00ff, 
+        0 0 45px #00ffff, 
+        0 0 70px #ff00ff, 
+        0 0 100px #ff00ff;
       -webkit-text-stroke: 2px #000;
       paint-order: stroke fill;
+    }
+
+    /* Dit geldt ALLEEN voor mobiel (schermen smaller dan 768px) */
+    @media (max-width: 768px) {
+      .neon-text {
+        text-shadow:
+          0 0 8px #ff00ff,
+          0 0 15px #ff00ff,
+          0 0 30px #00ffff;
+      }
     }
 
     .glitch {
