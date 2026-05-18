@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FairyLabs.Tech</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
    
@@ -87,6 +88,15 @@
       0%   { background-position: 0 0; }
       100% { background-position: 0 1200px; }
     }
+
+    .icon-button {
+     transition: all 0.3s ease;
+    }
+    .icon-button:hover {
+    transform: translateY(-4px) scale(1.1);
+    color: #ff00ff;
+    filter: drop-shadow(0 0 10px #ff00ff);
+    }
   </style>
 </head>
 <body class="min-h-screen text-cyan-300 bg-black">
@@ -117,36 +127,54 @@
       </div>
 
       <!-- Social Buttons -->
-      <div class="space-y-4">
-        <a href="https://x.com/fairylabs_tech" target="_blank"
+      <div class="space-y-4 mb-12">
+        <a href="#" 
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
-          FOLLOW THE LAB ON X
+          CUSTOM CYBERDECKS
         </a>
       
-        <a href="https://instagram.com/fairylabs.tech" target="_blank"
+        <a href="#" 
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
-          CHECK US OUT ON INSTAGRAM
+          HARDWARE GADGETS
         </a>
       
-        <a href="https://tiktok.com/@fairylabs.tech" target="_blank"
+        <a href="#" 
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
-          FOLLOW THE LAB ON TIKTOK
+          DEVELOPMENT KITS
         </a>
       
-        <a href="https://t.me/fairylabs_tech" target="_blank"
+        <a href="#" 
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
-          GET UPDATES ON TELEGRAM
+          3D STL FILES
         </a>
       </div>
 
-      <!-- Footer -->
-      <div class="text-center mt-16 text-xs opacity-70">
-        © 2026 FAIRYLABS. ALL RIGHTS RESERVED.
+      <div class="flex justify-center items-center gap-8 text-purple-400">
+        <a href="https://instagram.com/fairylabs.tech" target="_blank" class="icon-button" title="Instagram">
+          <i data-lucide="camera" class="w-10 h-10"></i>
+        </a>
+
+        <a href="https://tiktok.com/@fairylabs.tech" target="_blank" class="icon-button" title="TikTok">
+          <i data-lucide="music" class="w-9 h-9"></i>
+        </a>
+
+        <a href="https://x.com/fairylabs_tech" target="_blank" class="icon-button" title="X (Twitter)">
+          <i data-lucide="x" class="w-11 h-11"></i>
+        </a>
+
+        <a href="https://t.me/fairylabs_tech" target="_blank" class="icon-button" title="Telegram">
+          <i data-lucide="send" class="w-9 h-9"></i>
+        </a>
+      </div>
+
+      <div class="text-center mt-16 text-sm opacity-60 tracking-widest">
+        &copy; 2026 FairyLabs.
       </div>
     </div>
   </div>
-
+      
   <script>
+    lucide.createIcons();
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d', { alpha: true });
     let fontSize = 14;
