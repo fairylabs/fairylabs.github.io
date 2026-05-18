@@ -28,6 +28,12 @@
       paint-order: stroke fill;
     }
 
+    /* === NEON GLOED VOOR HET LOGO (ZOWEL PC ALS IPHONE) === */
+    .logo-glow {
+      filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.75)) 
+              drop-shadow(0 0 35px rgba(0, 255, 255, 0.5));
+    }
+
     .glitch {
       animation: glitch 1.5s infinite linear;
     }
@@ -101,32 +107,29 @@
 </head>
 <body class="min-h-screen text-cyan-300 bg-black">
 
-  <!-- Matrix Rain -->
   <canvas id="matrix"></canvas>
 
-  <!-- Scanline Effect -->
   <div class="scanlines"></div>
 
   <div class="content">
     <div class="max-w-2xl w-full mx-auto relative z-10">
-      <!-- Header -->
-      <div class="text-center mb-10">
-        <h1 class="text-7xl sm:text-8xl md:text-8xl font-bold tracking-widest neon-text glitch mb-2">
-          FAIRYLABS
-        </h1>
+      
+      <div class="text-center mb-10 flex flex-col items-center">
+        <img src="logo.png" 
+             alt="FairyLabs Logo" 
+             class="w-full max-w-lg logo-glow glitch mb-4 object-contain">
+        
         <div class="flex items-center justify-center gap-3 text-2xl" style="color: #00ff9f;">
           <span class="text-3xl drop-shadow-[0_0_10px_#00ff9f]">▲</span>
           <span class="tracking-[4px] animate-pulse drop-shadow-[0_0_12px_#00ff9f]">SYSTEM: BOOTING_</span>
         </div>
       </div>
 
-      <!-- Welcome Text -->
       <div class="bg-black/80 border border-purple-500/40 p-8 mb-12 backdrop-blur-sm rounded-lg text-lg leading-relaxed text-center">
         Welcome to the lab. We are building the future of hardware hacking, custom displays, and community-driven tech.
         Our systems are currently booting up, and new inventory is being prepared.
       </div>
 
-      <!-- Site Buttons -->
       <div class="space-y-4 mb-12">
         <a href="cyberdecks.html" 
            class="button block bg-black border-2 border-purple-400 hover:border-purple-300 text-purple-300 py-5 px-8 text-xl text-center tracking-widest">
