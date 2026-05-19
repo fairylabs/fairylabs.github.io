@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>>_ root@fairylabs.tech</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -34,35 +35,35 @@
     }
 
     .glitch {
-      animation: cyberFloat 6s infinite ease-in-out;
-    }
+  animation: cyberFloat 6s infinite ease-in-out;
+}
 
-    @keyframes cyberFloat {
-  /* 0% - Startpositie (Zachte paarse glow) */
+@keyframes cyberFloat {
+  /* 0% - Startpositie met een zachte basis-glow */
   0%, 100% { 
     transform: translate(0, 0) skew(0deg); 
-    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.4)); 
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.9)); /* Neon groene glow */
   }
-
-  /* 25% - Rechtsboven + Felle paarse glow pulse! */
+  
+  /* 25% - Rechtsboven + mini glitch + fellere glow */
   23% { transform: translate(6px, -5px) skew(0deg); }
   25% { 
     transform: translate(8px, -4px) skew(3deg); 
-    filter: drop-shadow(0 0 22px rgba(168, 85, 247, 0.9)); 
+    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.9)); /* Glow pulse piek! */
   }
   27% { transform: translate(6px, -5px) skew(0deg); }
-
-  /* 50% - Hoogste punt (Glow dimt weer) */
+  
+  /* 50% - Hoogste punt in het midden (glow dimt weer wat) */
   50% { 
     transform: translate(0, -12px) skew(0deg); 
-    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.5));
+    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.9));
   }
-
-  /* 75% - Linksboven + Tweede felle glow pulse! */
+  
+  /* 75% - Linksboven + mini glitch + fellere glow */
   73% { transform: translate(-6px, -5px) skew(0deg); }
   75% { 
     transform: translate(-8px, -4px) skew(-3deg); 
-    filter: drop-shadow(0 0 22px rgba(168, 85, 247, 0.9)); 
+    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.9)); /* Tweede pulse piek! */
   }
   77% { transform: translate(-6px, -5px) skew(0deg); }
 }
