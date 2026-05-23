@@ -9,14 +9,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-   
+    @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+    
     body {
       font-family: 'VT323', monospace;
       overflow-x: hidden;
       overflow-y: auto;
       margin: 0;
       padding: 0;
+      background-color: #000000; 
     }
 
    .neon-text {
@@ -36,38 +37,31 @@
     }
 
     .glitch {
-  animation: cyberFloat 6s infinite ease-in-out;
-}
+      animation: cyberFloat 6s infinite ease-in-out;
+    }
 
-@keyframes cyberFloat {
-  /* 0% - Startpositie met een zachte basis-glow */
-  0%, 100% { 
-    transform: translate(0, 0) skew(0deg); 
-    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.9)); /* Neon groene glow */
-  }
-  
-  /* 25% - Rechtsboven + mini glitch + fellere glow */
-  23% { transform: translate(6px, -5px) skew(0deg); }
-  25% { 
-    transform: translate(8px, -4px) skew(3deg); 
-    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.9)); /* Glow pulse piek! */
-  }
-  27% { transform: translate(6px, -5px) skew(0deg); }
-  
-  /* 50% - Hoogste punt in het midden (glow dimt weer wat) */
-  50% { 
-    transform: translate(0, -12px) skew(0deg); 
-    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.9));
-  }
-  
-  /* 75% - Linksboven + mini glitch + fellere glow */
-  73% { transform: translate(-6px, -5px) skew(0deg); }
-  75% { 
-    transform: translate(-8px, -4px) skew(-3deg); 
-    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.9)); /* Tweede pulse piek! */
-  }
-  77% { transform: translate(-6px, -5px) skew(0deg); }
-}
+    @keyframes cyberFloat {
+      0%, 100% { 
+        transform: translate(0, 0) skew(0deg); 
+        filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.9));
+      }
+      23% { transform: translate(6px, -5px) skew(0deg); }
+      25% { 
+        transform: translate(8px, -4px) skew(3deg); 
+        filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.9));
+      }
+      27% { transform: translate(6px, -5px) skew(0deg); }
+      50% { 
+        transform: translate(0, -12px) skew(0deg); 
+        filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.9));
+      }
+      73% { transform: translate(-6px, -5px) skew(0deg); }
+      75% { 
+        transform: translate(-8px, -4px) skew(-3deg); 
+        filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.9));
+      }
+      77% { transform: translate(-6px, -5px) skew(0deg); }
+    }
 
     .button {
       transition: all 0.3s ease;
@@ -80,7 +74,8 @@
     canvas#matrix {
       position: fixed;
       top: 0; left: 0;
-      z-index: -1;
+      z-index: 1; 
+      pointer-events: none; 
       opacity: 0.75;
       width: 100%;
       height: 100%;
@@ -94,7 +89,7 @@
       justify-content: center;
       padding: 2rem 1rem;
       position: relative;
-      z-index: 10;
+      z-index: 10; 
     }
 
     /* === SCANLINE EFFECT === */
@@ -122,12 +117,143 @@
     }
 
     .icon-button {
-     transition: all 0.3s ease;
+      transition: all 0.3s ease;
     }
     .icon-button:hover {
-    transform: translateY(-4px) scale(1.1);
-    color: #ff00ff;
-    filter: drop-shadow(0 0 10px #ff00ff);
+      transform: translateY(-4px) scale(1.1);
+      color: #ff00ff;
+      filter: drop-shadow(0 0 10px #ff00ff);
+    }
+
+    .terminal-box {
+      font-family: 'Share Tech Mono', monospace;
+      position: relative;
+      overflow: hidden !important;
+      background-color: rgba(103, 232, 249, 0.15) !important; 
+      animation: crtFlicker 0.15s infinite alternate;
+    }
+
+    .terminal-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.4) 0px,
+        rgba(0, 0, 0, 0.4) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      animation: crtJitter 0.1s infinite alternate;
+      z-index: 2;
+    }
+
+    .terminal-box::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 25px; 
+      
+      background: linear-gradient(
+        to bottom,
+        rgba(103, 232, 249, 0.95) 1px,
+        transparent 1px,
+        transparent calc(100% - 1px),
+        rgba(103, 232, 249, 0.95) 1px
+      );
+      
+      filter: drop-shadow(0 0 6px rgba(103, 232, 249, 1)); 
+      pointer-events: none;
+      
+      will-change: transform, opacity, top;
+      transform: translateZ(0);
+      
+      animation: 
+        crtScanningLine 4s ease-in-out infinite alternate,
+        trailFlicker 0.12s infinite alternate,
+        glitchLines 3s infinite linear;
+      z-index: 3;
+    }
+
+    .fast-glitch-line {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(103, 232, 249, 0.95);
+      filter: drop-shadow(0 0 8px rgba(103, 232, 249, 1));
+      pointer-events: none;
+      z-index: 4;
+      
+      will-change: transform, opacity, top;
+      transform: translateZ(0);
+      
+      animation: 
+        fastScan 1.2s cubic-bezier(0.15, 0.85, 0.35, 1) infinite,
+        hardGlitch 0.8s infinite linear;
+    }
+
+    @keyframes crtFlicker {
+      0% { opacity: 0.96; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes crtJitter {
+      0% { transform: translateY(0.5px); }
+      100% { transform: translateY(-0.5px); }
+    }
+
+    @keyframes crtScanningLine {
+      0% { top: 0%; }
+      100% { top: calc(100% - 25px); }
+    }
+
+    @keyframes fastScan {
+      0% { top: -5px; opacity: 0; }
+      5% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    @keyframes trailFlicker {
+      0% { opacity: 0.80; }
+      23% { opacity: 1; }
+      24% { opacity: 0.1; }
+      26% { opacity: 0.95; }
+      50% { opacity: 0.70; }
+      75% { opacity: 1; }
+      100% { opacity: 0.75; }
+    }
+
+    @keyframes glitchLines {
+      0%, 100% { transform: skew(0deg) scaleY(1) translateZ(0); }
+      8% { transform: skew(0deg) scaleY(1) translateZ(0); }
+      10% { transform: skew(15deg) scaleY(1.3) translateX(6px) translateZ(0); filter: hue-rotate(45deg); }
+      12% { transform: skew(-8deg) scaleY(0.7) translateX(-3px) translateZ(0); }
+      14% { transform: skew(0deg) scaleY(1) translateZ(0); }
+      55% { transform: translateX(0) translateZ(0); }
+      57% { transform: translateX(-20px) skew(-25deg) translateZ(0); opacity: 0.3; }
+      59% { transform: translateX(15px) skew(10deg) translateZ(0); opacity: 0.9; }
+      61% { transform: translateX(0) skew(0deg) translateZ(0); }
+      82% { transform: scaleY(1) translateZ(0); }
+      84% { transform: scaleY(3) translateY(1px) translateZ(0); }
+      86% { transform: scaleY(1) translateZ(0); }
+    }
+
+    @keyframes hardGlitch {
+      0%, 100% { transform: translateX(0) scaleX(1) translateZ(0); opacity: 1; }
+      20% { transform: translateX(0) translateZ(0); }
+      22% { transform: translateX(-12px) scaleX(1.5) translateZ(0); opacity: 0.4; }
+      24% { transform: translateX(18px) skewX(30deg) translateZ(0); opacity: 0.9; filter: brightness(200%); }
+      26% { transform: translateX(0) scaleX(1) translateZ(0); }
+      60% { transform: scaleY(1) translateZ(0); opacity: 1; }
+      61% { transform: scaleY(8) translateZ(0); opacity: 0.2; }
+      63% { transform: scaleY(1) translateZ(0); }
+      70% { transform: translateX(0) translateZ(0); }
+      71% { transform: translateX(-25px) translateZ(0); }
+      73% { transform: translateX(0) translateZ(0); }
     }
   </style>
 </head>
@@ -151,7 +277,8 @@
         </div>
       </div>
 
-      <div class="bg-black/80 border border-purple-500/40 p-8 mb-12 backdrop-blur-sm rounded-lg text-lg leading-relaxed text-center">
+      <div class="terminal-box border border-purple-500/40 p-8 mb-12 backdrop-blur-sm rounded-lg text-base leading-relaxed text-center">
+        <div class="fast-glitch-line"></div>
         Welcome to the lab. We are building the future of hardware hacking, custom displays, and community-driven tech.
         Our systems are currently booting up, and new inventory is being prepared.
       </div>
@@ -193,6 +320,7 @@
 
         <a href="https://t.me/fairylabs_tech" target="_blank" class="icon-button" title="Telegram">
           <i data-lucide="send" class="w-8 h-8"></i>
+        </a>
 
         <a href="mailto:info@fairylabs.tech" target="_blank" class="icon-button" title="E-Mail">
           <i data-lucide="mail" class="w-8 h-8"></i>
@@ -200,7 +328,7 @@
       </div>
 
       <div class="text-center mt-16 text-sm opacity-60 tracking-widest">
-        &copy; 2026 FAIRYLABS. SOME RIGHTS RESERVED.
+        &copy; 2026 FAIRYLABS. ALL RIGHTS COMPROMISED.
       </div>
     </div>
   </div>
@@ -208,7 +336,8 @@
   <script>
     lucide.createIcons();
     const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d', { alpha: true });
+    
+    const ctx = canvas.getContext('2d', { alpha: true }); 
     let fontSize = 14;
     let columns, drops;
 
@@ -224,11 +353,25 @@
 
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    function draw() {
+    let lastTime = performance.now(); // Veiliger startpunt ipv 0
+    const fps = 30; 
+    const fpsInterval = 1000 / fps;
+
+    function draw(currentTime) {
+      requestAnimationFrame(draw);
+
+      if (!currentTime) currentTime = performance.now();
+
+      const elapsed = currentTime - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = currentTime - (elapsed % fpsInterval);
+
       ctx.fillStyle = 'rgba(0, 0, 0, 0.085)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
       ctx.fillStyle = '#00ff9f';
       ctx.font = `${fontSize}px monospace`;
+      
       for (let i = 0; i < drops.length; i++) {
         const text = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -240,9 +383,10 @@
     }
 
     resizeCanvas();
-    setInterval(draw, 35);
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
+    
+    requestAnimationFrame(draw);
   </script>
 </body>
 </html>
