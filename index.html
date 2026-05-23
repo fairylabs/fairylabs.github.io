@@ -17,6 +17,7 @@
       overflow-y: auto;
       margin: 0;
       padding: 0;
+      background-color: #000000; 
     }
 
    .neon-text {
@@ -73,7 +74,8 @@
     canvas#matrix {
       position: fixed;
       top: 0; left: 0;
-      z-index: -1;
+      z-index: 1; 
+      pointer-events: none; 
       opacity: 0.75;
       width: 100%;
       height: 100%;
@@ -87,7 +89,7 @@
       justify-content: center;
       padding: 2rem 1rem;
       position: relative;
-      z-index: 10;
+      z-index: 10; 
     }
 
     /* === SCANLINE EFFECT === */
@@ -123,7 +125,6 @@
       filter: drop-shadow(0 0 10px #ff00ff);
     }
 
-    /* === TERMINAL BOX (GLOWING CYAN BACKGROUND) === */
     .terminal-box {
       font-family: 'Share Tech Mono', monospace;
       position: relative;
@@ -132,7 +133,6 @@
       animation: crtFlicker 0.15s infinite alternate;
     }
 
-    /* Het vaste, trillende scanline raster */
     .terminal-box::before {
       content: "";
       position: absolute;
@@ -149,7 +149,6 @@
       z-index: 2;
     }
 
-    /* === DUBBELE LASERLIJNEN (GEOPTIMALISEERD VOOR GPU) === */
     .terminal-box::after {
       content: "";
       position: absolute;
@@ -168,7 +167,6 @@
       filter: drop-shadow(0 0 6px rgba(103, 232, 249, 1)); 
       pointer-events: none;
       
-      /* GPU acceleratie kicks in */
       will-change: transform, opacity, top;
       transform: translateZ(0);
       
@@ -179,7 +177,6 @@
       z-index: 3;
     }
 
-    /* === DERDE SNELLE GLITCH LIJN (GEOPTIMALISEERD VOOR GPU) === */
     .fast-glitch-line {
       position: absolute;
       left: 0;
@@ -190,7 +187,6 @@
       pointer-events: none;
       z-index: 4;
       
-      /* GPU acceleratie kicks in */
       will-change: transform, opacity, top;
       transform: translateZ(0);
       
@@ -341,8 +337,7 @@
     lucide.createIcons();
     const canvas = document.getElementById('matrix');
     
-    // alpha: false zorgt ervoor dat de browser de transparantie laag onder het canvas niet hoeft te berekenen
-    const ctx = canvas.getContext('2d', { alpha: false }); 
+    const ctx = canvas.getContext('2d', { alpha: true }); 
     let fontSize = 14;
     let columns, drops;
 
@@ -358,21 +353,22 @@
 
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    let lastTime = 0;
-    const fps = 30; // Gelockt op een stabiele 30 FPS om je CPU met meer dan 50% te ontlasten
+    let lastTime = performance.now(); // Veiliger startpunt ipv 0
+    const fps = 30; 
     const fpsInterval = 1000 / fps;
 
     function draw(currentTime) {
-      // requestAnimationFrame roept zichzelf aan wanneer het scherm klaar is voor een nieuwe frame
       requestAnimationFrame(draw);
 
-      // Bereken de verstreken tijd sinds de laatste frame om de 30 FPS te handhaven
+      if (!currentTime) currentTime = performance.now();
+
       const elapsed = currentTime - lastTime;
       if (elapsed < fpsInterval) return;
       lastTime = currentTime - (elapsed % fpsInterval);
 
       ctx.fillStyle = 'rgba(0, 0, 0, 0.085)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
       ctx.fillStyle = '#00ff9f';
       ctx.font = `${fontSize}px monospace`;
       
@@ -390,7 +386,6 @@
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
     
-    // Start de hardware-vriendelijke animatieloop
     requestAnimationFrame(draw);
   </script>
 </body>
